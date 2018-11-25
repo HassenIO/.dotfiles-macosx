@@ -15,4 +15,3 @@ noremap <Right> <NOP>
 
 " Override tabs for some programming languages
 autocmd Filetype go setlocal tabstop=4 shiftwidth=4
-
