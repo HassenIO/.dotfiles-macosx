@@ -5,8 +5,8 @@ cd tmp/
 
 # Create symbolic links
 #
-ln -s "$dotfile/src/.zshrc" .zshrc
-ln -s "$dotfile/src/.vimrc" .vimrc
+ln -s "$dotfolder/src/.zshrc" .zshrc
+ln -s "$dotfolder/src/.vimrc" .vimrc
 
 # Move generated symbolic links to final destinations
 #
