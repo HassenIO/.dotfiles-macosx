@@ -8,8 +8,8 @@ export ZSH=/Users/htaidirt/.oh-my-zsh
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 # ZSH_THEME="robbyrussell" # Default
-# ZSH_THEME="fishy-customized"
-ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME="fishy-customized"
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL9K_MODE="awesome-patched"
 
 # Set list of themes to load
@@ -64,6 +64,7 @@ POWERLEVEL9K_MODE="awesome-patched"
 plugins=(
   git
   zsh-autosuggestions
+  auto-notify
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -136,9 +137,9 @@ function search () {
 function code() {
   if [ -z "$*" ]
   then
-    mvim .
+    code-insiders .
   else
-    mvim "$*"
+    code-insiders "$*"
   fi
 }
 
@@ -170,6 +171,33 @@ function sha256() {
   echo -n $1 | shasum -a 256
 }
 
+# Play with Python virtual environment
+#
+function venv() {
+  case "$1" in
+    "init") python3 -m venv venv
+      source venv/bin/activate
+      touch requirements.txt
+      ;;
+    "use") source venv/bin/activate
+      ;;
+    "add") pip3 install $2
+      pip3 freeze > requirements.txt
+      ;;
+    "freeze") pip3 freeze > requirements.txt
+      ;;
+    *) echo "Invalid option"
+      ;;
+  esac
+}
+
+# Drastic command to purge docker images and volumes
+#
+function docker_purge() {
+    docker rmi -f $(docker images -q)
+    docker system prune --force
+}
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -185,6 +213,12 @@ alias status="git status"
 alias add="git add -A"
 alias commit="git commit"
 alias diff="git diff"
+alias gc="gcloud"
+alias tf="terraform"
+
+# Save/Restore Hyper.js configs to/from Gist
+export HYPER_SYNC_SETTINGS_PERSONAL_ACCESS_TOKEN="6c2a8bd1e6d993a84d0bb0626f2503158eb10f88"
+export HYPER_SYNC_SETTINGS_GIST_ID="a8d692b02766e025b91ea55bde96d0c0#file-hyper-sync-settings-json"
 
 # Export NVM settings
 export NVM_DIR="$HOME/.nvm"
@@ -202,3 +236,20 @@ export PATH="/Users/htaidirt/.miniconda3/bin:$PATH"
 # tabtab source for sls package
 # uninstall by removing these lines or running `tabtab uninstall sls`
 [[ -f /Users/htaidirt/.nvm/versions/node/v8.9.3/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/htaidirt/.nvm/versions/node/v8.9.3/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/htaidirt/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/htaidirt/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/htaidirt/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/htaidirt/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[[ -f /Users/htaidirt/Workspace/AXA/datastore/datastore/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/htaidirt/Workspace/AXA/datastore/datastore/node_modules/tabtab/.completions/slss.zsh
+
+# We add terraform binary to path
+export PATH="/Users/htaidirt/.terraform:$PATH"
+
+# Go to workspace directory after boot
+cd ~/Workspace
+

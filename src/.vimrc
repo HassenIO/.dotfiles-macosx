@@ -122,6 +122,10 @@ nmap <c-k> 4k
 nmap <c-h> 4h
 nmap <c-l> 4l
 
+" Navigate tabs
+nmap <c-t> gt
+nmap <c-T> gT
+
 " When scrolling, keep cursor 3 lines away from screen border
 set scrolloff=3
 
@@ -153,7 +157,7 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 " Plugins settings and mappings
 
 " NERDTree -----------------------------
-nmap ,n :NERDTreeToggle<CR>
+nmap <c-n> :NERDTreeToggle<CR>
 
 " vim-numbertoggle -----------------------------
 set number relativenumber
