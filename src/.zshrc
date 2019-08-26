@@ -32,6 +32,10 @@ alias add="git add -A"
 alias commit="git commit"
 alias push="git push"
 
+##
+#   Kubernetes and environments
+#
+alias k="kubectl"
 
 ##
 #   Helpful aliases
@@ -60,6 +64,13 @@ function ip() {
     curl -s http://checkip.dyndns.org/ | sed 's/[a-zA-Z<>/ :]//g'
 }
 
+# Create and change directory
+#
+function take() {
+    mkdir -pv "$1"
+    cd "$1"
+}
+
 # Add SSH key
 #
 function add_ssh() {
@@ -73,6 +84,46 @@ function sha256() {
     echo -n $1 | shasum -a 256
 }
 
+# Launch the VS Code Insiders.
+# Nota: Open with current folder if no arguments.
+#
+function code() {
+  if [ -z "$*" ]
+  then
+    code-insiders .
+  else
+    code-insiders "$*"
+  fi
+}
+
+# Play with Python virtual environment
+#
+function venv() {
+  case "$1" in
+    "init") python3 -m venv venv
+      source venv/bin/activate
+      if [[ ! -f "requirements.txt" ]]; then
+          touch requirements.txt
+      fi
+      ;;
+    "use") source venv/bin/activate
+      ;;
+    "add") pip3 install $2
+      pip3 freeze > requirements.txt
+      ;;
+    "freeze") pip3 freeze > requirements.txt
+      ;;
+    *) echo "Invalid option"
+      ;;
+  esac
+}
+
+# Drastic command to purge docker images and volumes
+#
+function docker_purge() {
+    docker rmi -f $(docker images -q)
+    docker system prune --force
+}
 
 ##
 #   Set exports for apps
@@ -82,3 +133,19 @@ export NVM_DIR="$HOME/.nvm"
 . "/usr/local/opt/nvm/nvm.sh"  # Export NVM settings
 
 export PATH="/Users/htaidirt/.miniconda3/bin:$PATH"  # Add miniconda3 to path
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/htaidirt/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/htaidirt/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/htaidirt/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/htaidirt/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /Users/htaidirt/Workspace/AXA/datastore-injectors/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/htaidirt/Workspace/AXA/datastore-injectors/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /Users/htaidirt/Workspace/AXA/datastore-injectors/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/htaidirt/Workspace/AXA/datastore-injectors/node_modules/tabtab/.completions/sls.zsh
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[[ -f /Users/htaidirt/Workspace/AXA/datastore-injectors/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/htaidirt/Workspace/AXA/datastore-injectors/node_modules/tabtab/.completions/slss.zsh
