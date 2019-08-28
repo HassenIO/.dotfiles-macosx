@@ -34,6 +34,7 @@ Plug 'itchyny/lightline.vim'                " Configurable statusline/tabline
 Plug 'scrooloose/nerdtree'                  " Better file browser
 Plug 'jeffkreeftmeijer/vim-numbertoggle'    " Toggle line numbering absolute/relative
 Plug 'easymotion/vim-easymotion'            " Vim motions on speed!
+Plug 'editorconfig/editorconfig-vim'        " EditorConfig plugin for Vim
 Plug 'tpope/vim-fugitive'                   " Git wrapper
 Plug 'airblade/vim-gitgutter'               " Git diff in the gutter (sign column) and stages/undoes hunks
 Plug 'kien/ctrlp.vim'                       " Fuzzy file, buffer, mru, tag, ...etc finder

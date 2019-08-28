@@ -27,7 +27,7 @@ module.exports = {
     letterSpacing: 0,
 
     // terminal cursor background color and opacity (hex, rgb, hsl, hsv, hwb or cmyk)
-    cursorColor: '#eb5352',
+    cursorColor: '#469ee2',
 
     // terminal text color under BLOCK cursor
     cursorAccentColor: '#000',
@@ -148,8 +148,6 @@ module.exports = {
   //   `project#1.0.1`
   plugins: [
     'hyper-chesterish',
-    'hyper-tabs-enhanced',
-    'hyper-statusline',
     'hyper-search',
     'hyper-tab-icons',
   ],
