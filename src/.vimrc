@@ -29,7 +29,7 @@ call plug#begin('~/.vim/plugged')
 " ---------------------- Plugins from github repos:
 
 Plug 'sjl/vitality.vim'                     " Make Vim play nicely with iTerm 2 and tmux
-Plug 'kaicataldo/material.vim'              " Material theme
+Plug 'tyrannicaltoucan/vim-quantum'
 Plug 'itchyny/lightline.vim'                " Configurable statusline/tabline
 Plug 'scrooloose/nerdtree'                  " Better file browser
 Plug 'jeffkreeftmeijer/vim-numbertoggle'    " Toggle line numbering absolute/relative
@@ -68,9 +68,8 @@ set t_Co=256		    " Enable 256 colors in vim
 if (has('termguicolors'))
   set termguicolors
 endif
-let g:material_theme_style = 'default'
-let g:lightline = { 'colorscheme': 'powerline' }
-colorscheme material
+colorscheme quantum
+let g:lightline = { 'colorscheme': 'quantum' }      " Other option os 'powerline'
 syntax enable		" Set syntax highlighting ON
 
 " allow plugins by file type (required for plugins!)
