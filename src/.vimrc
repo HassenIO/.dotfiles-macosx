@@ -38,8 +38,10 @@ Plug 'editorconfig/editorconfig-vim'        " EditorConfig plugin for Vim
 Plug 'tpope/vim-fugitive'                   " Git wrapper
 Plug 'airblade/vim-gitgutter'               " Git diff in the gutter (sign column) and stages/undoes hunks
 Plug 'kien/ctrlp.vim'                       " Fuzzy file, buffer, mru, tag, ...etc finder
-Plug 'scrooloose/syntastic'                 " Syntax checking hacks for vim
+Plug 'vim-syntastic/syntastic'              " Syntax checking hacks for vim
 Plug 'davidhalter/jedi-vim'                 " Awesome Python autocompletion with VIM
+Plug 'leafgarland/typescript-vim'           " Typescript syntax files for Vim
+Plug 'ianks/vim-tsx'                        " Syntax highlighting and indenting for .tsx files
 Plug 'Shougo/neocomplcache.vim'             " Ultimate auto-completion system for Vim
 if has('python')
     Plug 'pignacio/vim-yapf-format' " YAPF formatter for Python
@@ -125,6 +127,9 @@ nmap <c-l> 4l
 " Navigate tabs
 nmap <c-t> gt
 nmap <c-T> gT
+
+" Toggle highlighting
+:nnoremap <silent><expr> <Leader>h (&hls && v:hlsearch ? ':nohls' : ':set hls')."\n"
 
 " When scrolling, keep cursor 3 lines away from screen border
 set scrolloff=3
