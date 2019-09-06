@@ -43,6 +43,7 @@ Plug 'davidhalter/jedi-vim'                 " Awesome Python autocompletion with
 Plug 'leafgarland/typescript-vim'           " Typescript syntax files for Vim
 Plug 'ianks/vim-tsx'                        " Syntax highlighting and indenting for .tsx files
 Plug 'Shougo/neocomplcache.vim'             " Ultimate auto-completion system for Vim
+Plug 'arcticicestudio/nord-vim'
 if has('python')
     Plug 'pignacio/vim-yapf-format' " YAPF formatter for Python
 endif
@@ -70,8 +71,8 @@ set t_Co=256		    " Enable 256 colors in vim
 if (has('termguicolors'))
   set termguicolors
 endif
-colorscheme quantum
-let g:lightline = { 'colorscheme': 'quantum' }      " Other option os 'powerline'
+colorscheme nord    " Other option is 'quantum'
+let g:lightline = { 'colorscheme': 'nord' }      " Other option os 'powerline'
 syntax enable		" Set syntax highlighting ON
 
 " allow plugins by file type (required for plugins!)
@@ -94,9 +95,9 @@ set nocompatible	    " be iMproved
 " Indent settings
 set autoindent		    " Same indent as previous line
 set expandtab		    " Replace <Tab> by spaces
-set shiftwidth=4	    " Spaces for the >> operation
+set shiftwidth=2	    " Spaces for the >> operation
 set smartindent		    " Smart insertion of indent in some cases
-set softtabstop=4	    " How many columns is a <Tab>
+set softtabstop=2	    " How many columns is a <Tab>
 "set tabstop=4		    " Spaces inserted when pressing <Tab> key
 
 " Search settings
@@ -129,7 +130,7 @@ nmap <c-t> gt
 nmap <c-T> gT
 
 " Toggle highlighting
-:nnoremap <silent><expr> <Leader>h (&hls && v:hlsearch ? ':nohls' : ':set hls')."\n"
+nnoremap <silent><expr> <Leader>h (&hls && v:hlsearch ? ':nohls' : ':set hls')."\n"
 
 " When scrolling, keep cursor 3 lines away from screen border
 set scrolloff=3
@@ -170,7 +171,7 @@ set number relativenumber
 " CtrlP -----------------------------
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_custom_ignore = '\v[\/]\.(git)$'
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|node_modules|venv)$'
 
 " Syntastic ------------------------------
 nmap <leader>e :Errors<CR>
