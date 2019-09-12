@@ -42,6 +42,10 @@ alias k="kubectl"
 ##
 alias del_ds_store="find . -name '.DS_Store' -type f -delete"
 alias ":q"="exit" # Yeah VIM habits, you know!
+alias ..="cd ../"
+alias ...="cd ../../"
+alias ....="cd ../../../"
+alias ~="cd ~"
 
 
 ##
