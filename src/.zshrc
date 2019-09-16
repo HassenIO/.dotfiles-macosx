@@ -36,6 +36,7 @@ alias push="git push"
 #   Kubernetes and environments
 #
 alias k="kubectl"
+alias knoc="kubectl config unset current-context"
 
 ##
 #   Helpful aliases
@@ -126,8 +127,9 @@ function venv() {
 # Drastic command to purge docker images and volumes
 #
 function docker_purge() {
-    docker rmi -f $(docker images -q)
-    docker system prune --force
+  docker container rm ($docker container list -aq)
+  docker rmi -f $(docker images -q)
+  docker system prune --force
 }
 
 ##
