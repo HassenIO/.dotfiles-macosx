@@ -1,7 +1,7 @@
 ##
 #   Manipulate .zshrc file
 #
-export DOTFILE_ZSHRC="~/.dotfiles/src/.zshrc"
+export DOTFILE_ZSHRC="~/Workspace/Playground/.dotfiles/src/.zshrc"
 alias change="vim $DOTFILE_ZSHRC" # Open .zshrc to be edited in VS Code
 alias resource="source $DOTFILE_ZSHRC" # Re-run source command on .zshrc to update current terminal session with new settings
 
@@ -12,10 +12,10 @@ autoload -U promptinit; promptinit
 prompt spaceship
 
 # Enable syntax highlighting in new shell sessions
-source /usr/local/share/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Allow the use of the z plugin to easily navigate directories
-. /Users/htaidirt/.dotfiles/resources/z.sh
+# . /Users/htaidirt/.dotfiles/resources/z.sh
 
 ##
 #   ColorLS
@@ -137,7 +137,8 @@ function docker_purge() {
 ##
 
 export NVM_DIR="$HOME/.nvm"
-. "/usr/local/opt/nvm/nvm.sh"  # Export NVM settings
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# . "/usr/local/opt/nvm/nvm.sh"  # Export NVM settings
 
 export PATH="/Users/htaidirt/.miniconda3/bin:$PATH"  # Add miniconda3 to path
 
