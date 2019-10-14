@@ -140,13 +140,22 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # . "/usr/local/opt/nvm/nvm.sh"  # Export NVM settings
 
-export PATH="/Users/htaidirt/.miniconda3/bin:$PATH"  # Add miniconda3 to path
+# place this after nvm initialization!
+# Credential: https://medium.com/@kinduff/automatic-version-switch-for-nvm-ff9e00ae67f3
+autoload -U add-zsh-hook
+load-nvmrc() {
+  if [[ -f .nvmrc && -r .nvmrc ]]; then
+    nvm use
+  elif [[ $(nvm version) != $(nvm version default)  ]]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/htaidirt/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/htaidirt/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/htaidirt/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/htaidirt/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+# Add Miniconda 3 to path. Ensure it is installed in ~/.miniconda3 folder
+export PATH="$HOME/.miniconda3/bin:$PATH"  # Add miniconda3 to path
 
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
