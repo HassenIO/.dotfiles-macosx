@@ -39,6 +39,15 @@ alias k="kubectl"
 alias knoc="kubectl config unset current-context"
 
 ##
+#   CircleCI CLI
+#
+if ! [ -x "$(command -v circleci)" ]; then
+  echo "Installing CircleCI CLI..."
+  curl -fLSs https://circle.ci/cli | bash
+fi
+alias ci=circleci
+
+##
 #   Helpful aliases
 ##
 alias del_ds_store="find . -name '.DS_Store' -type f -delete"
