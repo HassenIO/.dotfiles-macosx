@@ -124,6 +124,12 @@ function venv() {
   esac
 }
 
+# Delete images based on name, no matter the tag
+#
+function docker_images_del() {
+  docker rmi $(docker images --format "{{.Repository}}:{{.Tag}}" | grep "$1")
+}
+
 # Drastic command to purge docker images and volumes
 #
 function docker_purge() {
