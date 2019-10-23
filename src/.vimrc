@@ -32,6 +32,7 @@ Plug 'sjl/vitality.vim'                     " Make Vim play nicely with iTerm 2 
 Plug 'tyrannicaltoucan/vim-quantum'
 Plug 'itchyny/lightline.vim'                " Configurable statusline/tabline
 Plug 'scrooloose/nerdtree'                  " Better file browser
+Plug 'jlanzarotta/bufexplorer'              " Quickly and easily switch between buffers
 Plug 'jeffkreeftmeijer/vim-numbertoggle'    " Toggle line numbering absolute/relative
 Plug 'easymotion/vim-easymotion'            " Vim motions on speed!
 Plug 'editorconfig/editorconfig-vim'        " EditorConfig plugin for Vim
@@ -42,8 +43,8 @@ Plug 'vim-syntastic/syntastic'              " Syntax checking hacks for vim
 Plug 'davidhalter/jedi-vim'                 " Awesome Python autocompletion with VIM
 Plug 'leafgarland/typescript-vim'           " Typescript syntax files for Vim
 Plug 'ianks/vim-tsx'                        " Syntax highlighting and indenting for .tsx files
-Plug 'Shougo/neocomplcache.vim'             " Ultimate auto-completion system for Vim
-Plug 'arcticicestudio/nord-vim'
+Plug 'daylerees/colour-schemes', { 'rtp': 'vim' }             " Colour schemes for a variety of editors created by Dayle Rees
+Plug 'rainglow/vim'
 if has('python')
     Plug 'pignacio/vim-yapf-format' " YAPF formatter for Python
 endif
@@ -71,8 +72,11 @@ set t_Co=256		    " Enable 256 colors in vim
 if (has('termguicolors'))
   set termguicolors
 endif
-colorscheme nord    " Other option is 'quantum'
-let g:lightline = { 'colorscheme': 'nord' }      " Other option os 'powerline'
+" colorscheme pastel
+colorscheme kiwi
+let g:lightline = { 'colorscheme': 'powerline' }      " Other option os 'powerline'
+set guifont=HackNerdFontComplete-Regular:h14
+set linespace=3
 syntax enable		" Set syntax highlighting ON
 
 " allow plugins by file type (required for plugins!)
@@ -171,7 +175,9 @@ set number relativenumber
 " CtrlP -----------------------------
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|node_modules|venv)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir': '\v[\/]\.(git|node_modules|venv)$',
+  \ }
 
 " Syntastic ------------------------------
 nmap <leader>e :Errors<CR>

@@ -171,6 +171,7 @@ load-nvmrc
 
 # Add Miniconda 3 to path. Ensure it is installed in ~/.miniconda3 folder
 export PATH="$HOME/.miniconda3/bin:$PATH"  # Add miniconda3 to path
+export PATH="~/.local/bin:$PATH"
 
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
