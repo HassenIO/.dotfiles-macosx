@@ -6,6 +6,20 @@ alias change="vim $DOTFILE_ZSHRC" # Open .zshrc to be edited in VS Code
 alias resource="source $DOTFILE_ZSHRC" # Re-run source command on .zshrc to update current terminal session with new settings
 
 ##
+#   Update $PATH for the diffent applications and packages
+#
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f "$HOME/Packages/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/Packages/google-cloud-sdk/path.zsh.inc"; fi
+# The next line enables shell command completion for gcloud.
+if [ -f "$HOME/Packages/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/Packages/google-cloud-sdk/completion.zsh.inc"; fi
+# The next line adds Miniconda 3 to path. Ensure it is installed in ~/.miniconda3 folder
+export PATH="$HOME/.miniconda3/bin:$PATH"  # Add miniconda3 to path
+export PATH="$HOME/.local/bin:$PATH"
+# The next line adds Go PATHs
+export GOPATH="$HOME/Packages/go"
+export PATH="$GOPATH/bin:$PATH"
+
+##
 # Spaceship ZSH prompt
 #
 autoload -U promptinit; promptinit
@@ -31,6 +45,17 @@ alias status="git status"
 alias add="git add -A"
 alias commit="git commit"
 alias push="git push"
+
+##
+#   Add Google Cloud aliases
+#
+alias gc="gcloud"
+alias gs="gsutil"
+
+##
+#   Add Terraform aliases
+#
+alias tf="terraform"
 
 ##
 #   Kubernetes and environments
@@ -168,28 +193,3 @@ load-nvmrc() {
 }
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
-
-# Add Miniconda 3 to path. Ensure it is installed in ~/.miniconda3 folder
-export PATH="$HOME/.miniconda3/bin:$PATH"  # Add miniconda3 to path
-export PATH="~/.local/bin:$PATH"
-
-# Add Go PATHs
-#
-export GOPATH=$HOME/Workspace/go
-export PATH=$PATH:$GOPATH/bin
-
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f ~/Workspace/AXA/datastore-injectors/node_modules/tabtab/.completions/serverless.zsh ]] && . ~/Workspace/AXA/datastore-injectors/node_modules/tabtab/.completions/serverless.zsh
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[[ -f ~/Workspace/AXA/datastore-injectors/node_modules/tabtab/.completions/sls.zsh ]] && . ~/Workspace/AXA/datastore-injectors/node_modules/tabtab/.completions/sls.zsh
-# tabtab source for slss package
-# uninstall by removing these lines or running `tabtab uninstall slss`
-[[ -f ~/Workspace/AXA/datastore-injectors/node_modules/tabtab/.completions/slss.zsh ]] && . ~/Workspace/AXA/datastore-injectors/node_modules/tabtab/.completions/slss.zsh
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '~/Workspace/google-cloud-sdk/path.zsh.inc' ]; then . '~/Workspace/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '~/Workspace/google-cloud-sdk/completion.zsh.inc' ]; then . '~/Workspace/google-cloud-sdk/completion.zsh.inc'; fi
