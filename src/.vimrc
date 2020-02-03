@@ -73,7 +73,7 @@ if (has('termguicolors'))
   set termguicolors
 endif
 " colorscheme pastel
-colorscheme kiwi
+colorscheme joker
 let g:lightline = { 'colorscheme': 'powerline' }      " Other option os 'powerline'
 set guifont=HackNerdFontComplete-Regular:h14
 set linespace=3
