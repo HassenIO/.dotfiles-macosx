@@ -94,7 +94,12 @@ function port() {
 
 # Search for a pattern in any file within current directory
 function search() {
-    grep -rnw `pwd` -e $1
+    if [ -z "$2" ]
+    then
+      grep -rnF --color $1 .
+    else
+      grep -rnF --color $1 $2
+    fi
 }
 
 # Get my external current IP address
