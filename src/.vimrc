@@ -194,7 +194,11 @@ nmap <F2> <Plug>(coc-rename)
 
 " NERDTree -----------------------------
 nmap <c-n> :NERDTreeToggle<CR>
+let NERDTreeMinimalUI = 0
+let NERDTreeDirArrows = 0
+let NERDTreeAutoDeleteBuffer = 1
 let g:NERDTreeIgnore = ['^node_modules$','^venv$','^.git$']
+let g:NERDTreeWinPos = "left"
 
 " vim-numbertoggle -----------------------------
 set number relativenumber
