@@ -29,7 +29,6 @@ call plug#begin('~/.vim/plugged')
 " ---------------------- Plugins from github repos:
 
 Plug 'sjl/vitality.vim'                     " Make Vim play nicely with iTerm 2 and tmux
-Plug 'tyrannicaltoucan/vim-quantum'
 Plug 'itchyny/lightline.vim'                " Configurable statusline/tabline
 Plug 'scrooloose/nerdtree'                  " Better file browser
 Plug 'jlanzarotta/bufexplorer'              " Quickly and easily switch between buffers
@@ -40,11 +39,19 @@ Plug 'tpope/vim-fugitive'                   " Git wrapper
 Plug 'airblade/vim-gitgutter'               " Git diff in the gutter (sign column) and stages/undoes hunks
 Plug 'kien/ctrlp.vim'                       " Fuzzy file, buffer, mru, tag, ...etc finder
 Plug 'vim-syntastic/syntastic'              " Syntax checking hacks for vim
-Plug 'davidhalter/jedi-vim'                 " Awesome Python autocompletion with VIM
-Plug 'leafgarland/typescript-vim'           " Typescript syntax files for Vim
-Plug 'ianks/vim-tsx'                        " Syntax highlighting and indenting for .tsx files
-Plug 'daylerees/colour-schemes', { 'rtp': 'vim' }             " Colour schemes for a variety of editors created by Dayle Rees
-Plug 'rainglow/vim'
+" Plug 'davidhalter/jedi-vim'                 " Awesome Python autocompletion with VIM
+" Plug 'leafgarland/typescript-vim'           " Typescript syntax files for Vim
+" Plug 'hashivim/vim-terraform'               " Basic vim/terraform integration
+" Plug 'ianks/vim-tsx'                        " Syntax highlighting and indenting for .tsx files
+Plug 'neoclide/coc.nvim', {'branch': 'release'}   " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode
+Plug 'junegunn/fzf', { 'do': './install --bin' }  " Required for fzf.vim (next plugin)
+Plug 'junegunn/fzf.vim'                     " Fuzzy finding for VIM
+Plug 'Xuyuanp/nerdtree-git-plugin'          " A plugin of NERDTree showing git status
+Plug 'preservim/nerdcommenter'              " Vim plugin for intensely nerdy commenting powers
+Plug 'ryanoasis/vim-devicons'               " Adds file type icons to Vim plugins
+Plug 'sheerun/vim-polyglot'                 " A solid language pack for Vim
+Plug 'daylerees/colour-schemes', { 'rtp': 'vim' }   " Colour schemes for a variety of editors created by Dayle Rees
+Plug 'rainglow/vim'                         " 320+ color themes for VIM
 if has('python')
     Plug 'pignacio/vim-yapf-format' " YAPF formatter for Python
 endif
@@ -75,7 +82,7 @@ endif
 " colorscheme pastel
 colorscheme joker
 let g:lightline = { 'colorscheme': 'powerline' }      " Other option os 'powerline'
-set guifont=HackNerdFontComplete-Regular:h14
+set guifont=HackNerdFontComplete-Regular:h16
 set linespace=3
 syntax enable		" Set syntax highlighting ON
 
@@ -166,17 +173,41 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 " ============================================================================
 " Plugins settings and mappings
 
+" CoC (Make your Vim/Neovim as smart as VSCode)
+" Prettier command for coc
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+" Remap for rename current word
+nmap <F2> <Plug>(coc-rename)
+
 " NERDTree -----------------------------
 nmap <c-n> :NERDTreeToggle<CR>
+let g:NERDTreeIgnore = ['^node_modules$','^venv$','^.git$']
 
 " vim-numbertoggle -----------------------------
 set number relativenumber
+
+" FZF
+"map <C-;> :Files<CR>
 
 " CtrlP -----------------------------
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_custom_ignore = {
-  \ 'dir': '\v[\/]\.(git|node_modules|venv)$',
+  \ 'dir':  '\.git$\|node_modules\|venv\|log\|tmp$',
+  \ 'file': '\.DS_Store$'
   \ }
 
 " Syntastic ------------------------------
