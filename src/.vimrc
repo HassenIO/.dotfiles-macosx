@@ -27,35 +27,108 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " ---------------------- Plugins from github repos:
-
+"
 Plug 'sjl/vitality.vim'                     " Make Vim play nicely with iTerm 2 and tmux
-Plug 'itchyny/lightline.vim'                " Configurable statusline/tabline
-Plug 'scrooloose/nerdtree'                  " Better file browser
 Plug 'jlanzarotta/bufexplorer'              " Quickly and easily switch between buffers
-Plug 'jeffkreeftmeijer/vim-numbertoggle'    " Toggle line numbering absolute/relative
 Plug 'easymotion/vim-easymotion'            " Vim motions on speed!
 Plug 'editorconfig/editorconfig-vim'        " EditorConfig plugin for Vim
-Plug 'tpope/vim-fugitive'                   " Git wrapper
 Plug 'airblade/vim-gitgutter'               " Git diff in the gutter (sign column) and stages/undoes hunks
-Plug 'kien/ctrlp.vim'                       " Fuzzy file, buffer, mru, tag, ...etc finder
-Plug 'vim-syntastic/syntastic'              " Syntax checking hacks for vim
-" Plug 'davidhalter/jedi-vim'                 " Awesome Python autocompletion with VIM
-" Plug 'leafgarland/typescript-vim'           " Typescript syntax files for Vim
-" Plug 'hashivim/vim-terraform'               " Basic vim/terraform integration
-" Plug 'ianks/vim-tsx'                        " Syntax highlighting and indenting for .tsx files
-Plug 'neoclide/coc.nvim', {'branch': 'release'}   " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode
-Plug 'junegunn/fzf', { 'do': './install --bin' }  " Required for fzf.vim (next plugin)
-Plug 'junegunn/fzf.vim'                     " Fuzzy finding for VIM
 Plug 'Xuyuanp/nerdtree-git-plugin'          " A plugin of NERDTree showing git status
 Plug 'preservim/nerdcommenter'              " Vim plugin for intensely nerdy commenting powers
 Plug 'ryanoasis/vim-devicons'               " Adds file type icons to Vim plugins
 Plug 'sheerun/vim-polyglot'                 " A solid language pack for Vim
-Plug 'daylerees/colour-schemes', { 'rtp': 'vim' }   " Colour schemes for a variety of editors created by Dayle Rees
-Plug 'rainglow/vim'                         " 320+ color themes for VIM
+Plug 'govim/govim', { 'for': 'go' }         " Go VIM is a Go development plugin for Vim8, written in Go
+Plug 'hashivim/vim-terraform'               " Basic vim/terraform integration
 if has('python')
     Plug 'pignacio/vim-yapf-format' " YAPF formatter for Python
 endif
 
+
+" ---------------------- Themes (Yes, I'm still looking for the perfect theme)
+"
+Plug 'daylerees/colour-schemes', { 'rtp': 'vim' }   " Colour schemes for a variety of editors created by Dayle Rees
+Plug 'rainglow/vim'                                 " 320+ color themes for VIM
+Plug 'morhetz/gruvbox'                              " Retro groove color scheme for Vim
+
+
+" ---------------------- Other plugins with their configurations
+"
+Plug 'itchyny/lightline.vim'                          " Configurable statusline/tabline
+let g:lightline = { 'colorscheme': 'powerline' }      " Other option as 'powerline'
+
+Plug 'scrooloose/nerdtree'                  " NerdTree: A better file browser
+nmap <c-n> :NERDTreeToggle<CR>
+let NERDTreeMinimalUI = 0
+let NERDTreeDirArrows = 0
+let NERDTreeAutoDeleteBuffer = 1
+let g:NERDTreeIgnore = ['^node_modules$','^venv$','^.git$']
+let g:NERDTreeWinPos = "left"
+
+Plug 'jeffkreeftmeijer/vim-numbertoggle'    " Toggle line numbering absolute/relative
+set number relativenumber
+
+Plug 'tpope/vim-fugitive'                   " Git wrapper
+set statusline+=%{FugitiveStatusline()}
+
+Plug 'kien/ctrlp.vim'                       " Fuzzy file, buffer, mru, tag, ...etc finder
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|node_modules\|venv\|log\|tmp$',
+  \ 'file': '\.DS_Store$'
+  \ }
+
+" Syntastic ------------------------------
+Plug 'vim-syntastic/syntastic'              " Syntax checking hacks for vim
+nmap <leader>e :Errors<CR>
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_enable_signs = 1
+let g:syntastic_error_symbol = '✗' " custom icons (enable them if you use a patched font, and enable the previous settings)
+let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_style_error_symbol = '✗'
+let g:syntastic_style_warning_symbol = '⚠'
+
+
+" Plug 'leafgarland/typescript-vim'           " Typescript syntax files for Vim
+" Plug 'ianks/vim-tsx'                        " Syntax highlighting and indenting for .tsx files
+Plug 'zxqfl/tabnine-vim'                    " TabNine uses deep learning to help you write code faster
+
+"" CoC (make VIM as smart as VS Code) ----
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}   " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode
+"" Prettier command for coc
+"command! -nargs=0 Prettier :CocCommand prettier.formatFile
+"" Use tab for trigger completion with characters ahead and navigate.
+"" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+"inoremap <silent><expr> <TAB>
+      "\ pumvisible() ? "\<C-n>" :
+      "\ <SID>check_back_space() ? "\<TAB>" :
+      "\ coc#refresh()
+"inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+"function! s:check_back_space() abort
+  "let col = col('.') - 1
+  "return !col || getline('.')[col - 1]  =~# '\s'
+"endfunction
+"" Use <c-space> to trigger completion.
+"inoremap <silent><expr> <c-space> coc#refresh()
+"" Remap for rename current word
+"nmap <F2> <Plug>(coc-rename)
+
+
+" FZF (Fuzzy Finder) --------------------
+Plug 'junegunn/fzf', { 'do': './install --bin' }  " Required for fzf.vim (next plugin)
+Plug 'junegunn/fzf.vim'                           " Fuzzy finding for VIM
+map <C-;> :Files<CR>
+let g:fzf_layout = { 'window': { 'width': 0.7, 'height': 0.6 } }
+command B Buffers
+command F Files
+
+" ---
 " Tell vim-plug we finished declaring plugins, so it can load them
 call plug#end()
 
@@ -73,15 +146,14 @@ endif
 " no vi-compatible
 set nocompatible
 
-
 " Set color scheme (and theme)
 set t_Co=256		    " Enable 256 colors in vim
 if (has('termguicolors'))
   set termguicolors
 endif
 " colorscheme pastel
-colorscheme joker
-let g:lightline = { 'colorscheme': 'powerline' }      " Other option os 'powerline'
+"colorscheme dare " brave bold
+colorscheme gruvbox
 set guifont=HackNerdFontComplete-Regular:h16
 set linespace=3
 syntax enable		" Set syntax highlighting ON
@@ -93,7 +165,8 @@ filetype indent on
 " Change <Leader> (default is \)
 let mapleader = ','
 
-" Set relative numbering by default
+" Remap kj for fast normal mode
+inoremap kj <Esc>
 
 " General settings
 set ls=2                    " always show status bar
@@ -115,6 +188,10 @@ set softtabstop=2	    " How many columns is a <Tab>
 set hlsearch		    " Highlight searching  
 set incsearch		    " Incremental searching
 set smartcase		    " Set smart case
+
+" Quickly insert an empty new line without entering insert mode
+nnoremap <Leader>o o<Esc>
+nnoremap <Leader>O O<Esc>
 
 " Disable arrow keys
 " map         <Left>  <Nop>
@@ -170,90 +247,8 @@ endif
 " Exclude files and directories using Vim's wildignore
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 
-" ============================================================================
-" Plugins settings and mappings
-
-" CoC (Make your Vim/Neovim as smart as VSCode)
-" Prettier command for coc
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-" Remap for rename current word
-nmap <F2> <Plug>(coc-rename)
-
-" NERDTree -----------------------------
-nmap <c-n> :NERDTreeToggle<CR>
-let NERDTreeMinimalUI = 0
-let NERDTreeDirArrows = 0
-let NERDTreeAutoDeleteBuffer = 1
-let g:NERDTreeIgnore = ['^node_modules$','^venv$','^.git$']
-let g:NERDTreeWinPos = "left"
-
-" vim-numbertoggle -----------------------------
-set number relativenumber
-
-" FZF
-"map <C-;> :Files<CR>
-
-" CtrlP -----------------------------
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|node_modules\|venv\|log\|tmp$',
-  \ 'file': '\.DS_Store$'
-  \ }
-
-" Syntastic ------------------------------
-nmap <leader>e :Errors<CR>
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_enable_signs = 1
-" custom icons (enable them if you use a patched font, and enable the previous 
-" setting)
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
-let g:syntastic_style_error_symbol = '✗'
-let g:syntastic_style_warning_symbol = '⚠'
-
-" Jedi-vim ------------------------------
-let g:jedi#goto_command = ',d'
-let g:jedi#usages_command = ',o'
-
-" NeoComplCache ------------------------------
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_enable_ignore_case = 1
-let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_enable_auto_select = 1
-let g:neocomplcache_enable_fuzzy_completion = 1
-let g:neocomplcache_enable_camel_case_completion = 1
-let g:neocomplcache_enable_underbar_completion = 1
-let g:neocomplcache_fuzzy_completion_start_length = 1
-let g:neocomplcache_auto_completion_start_length = 1
-let g:neocomplcache_manual_completion_start_length = 1
-let g:neocomplcache_min_keyword_length = 1
-let g:neocomplcache_min_syntax_length = 1
-" complete with workds from any opened file
-let g:neocomplcache_same_filetype_lists = {}
-let g:neocomplcache_same_filetype_lists._ = '_'
-
-" Fugitive ------------------------------
-set statusline+=%{FugitiveStatusline()}
+" Make Terraform format *.tf files before save
+autocmd BufWritePre *.tf :Terraform fmt
 
 " Statusline ----------------------------
 set statusline+=%*
