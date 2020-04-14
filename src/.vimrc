@@ -1,3 +1,31 @@
+"
+"                                        ________ ++     ________
+"                                       /VVVVVVVV\++++  /VVVVVVVV\
+"                                       \VVVVVVVV/++++++\VVVVVVVV/
+"                                        |VVVVVV|++++++++/VVVVV/'
+"                                        |VVVVVV|++++++/VVVVV/'
+"                                       +|VVVVVV|++++/VVVVV/'+
+"                                     +++|VVVVVV|++/VVVVV/'+++++
+"                                   +++++|VVVVVV|/VVVVV/'+++++++++
+"                                     +++|VVVVVVVVVVV/'+++++++++
+"                                       +|VVVVVVVVV/'+++++++++
+"                                        |VVVVVVV/'+++++++++
+"                                        |VVVVV/'+++++++++
+"                                        |VVV/'+++++++++
+"                                        'V/'   ++++++
+"                                                 ++
+"    __/\\\________/\\\__/\\\\\\\\\\\__/\\\\____________/\\\\____/\\\\\\\\\____________/\\\\\\\\\_
+"     _\/\\\_______\/\\\_\/////\\\///__\/\\\\\\________/\\\\\\__/\\\///////\\\_______/\\\////////__
+"      _\//\\\______/\\\______\/\\\_____\/\\\//\\\____/\\\//\\\_\/\\\_____\/\\\_____/\\\/___________
+"       __\//\\\____/\\\_______\/\\\_____\/\\\\///\\\/\\\/_\/\\\_\/\\\\\\\\\\\/_____/\\\_____________
+"        ___\//\\\__/\\\________\/\\\_____\/\\\__\///\\\/___\/\\\_\/\\\//////\\\____\/\\\_____________
+"         ____\//\\\/\\\_________\/\\\_____\/\\\____\///_____\/\\\_\/\\\____\//\\\___\//\\\____________
+"          _____\//\\\\\__________\/\\\_____\/\\\_____________\/\\\_\/\\\_____\//\\\___\///\\\__________
+"           ______\//\\\________/\\\\\\\\\\\_\/\\\_____________\/\\\_\/\\\______\//\\\____\////\\\\\\\\\_
+"            _______\///________\///////////__\///______________\///__\///________\///________\/////////__
+"
+"=================================================================================================================
+"
 " Vim-plug initialization
 " Avoid modify this section, unless you are very sure of what you are doing
 
@@ -42,6 +70,7 @@ Plug 'hashivim/vim-terraform'               " Basic vim/terraform integration
 if has('python')
     Plug 'pignacio/vim-yapf-format' " YAPF formatter for Python
 endif
+Plug 'zxqfl/tabnine-vim'                    " TabNine uses deep learning to help you write code faster
 
 
 " ---------------------- Themes (Yes, I'm still looking for the perfect theme)
@@ -95,10 +124,6 @@ let g:syntastic_style_error_symbol = '✗'
 let g:syntastic_style_warning_symbol = '⚠'
 
 
-" Plug 'leafgarland/typescript-vim'           " Typescript syntax files for Vim
-" Plug 'ianks/vim-tsx'                        " Syntax highlighting and indenting for .tsx files
-Plug 'zxqfl/tabnine-vim'                    " TabNine uses deep learning to help you write code faster
-
 "" CoC (make VIM as smart as VS Code) ----
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}   " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode
 "" Prettier command for coc
@@ -128,7 +153,15 @@ let g:fzf_layout = { 'window': { 'width': 0.7, 'height': 0.6 } }
 command B Buffers
 command F Files
 
-" ---
+" Multiple Cursor (use with caution) ----
+Plug 'terryma/vim-multiple-cursors'         " Allow multiple cursors, like modern editors
+let g:multi_cursor_start_word_key = '<C-c>'
+
+" Identation markers
+Plug 'yggdroot/indentline'                  " A vim plugin to display the indention levels with thin vertical lines
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+
+" ============================================================================
 " Tell vim-plug we finished declaring plugins, so it can load them
 call plug#end()
 
@@ -185,7 +218,7 @@ set softtabstop=2	    " How many columns is a <Tab>
 "set tabstop=4		    " Spaces inserted when pressing <Tab> key
 
 " Search settings
-set hlsearch		    " Highlight searching  
+set hlsearch		    " Highlight searching
 set incsearch		    " Incremental searching
 set smartcase		    " Set smart case
 
@@ -250,5 +283,15 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 " Make Terraform format *.tf files before save
 autocmd BufWritePre *.tf :Terraform fmt
 
+" Quick window resize
+nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
+nnoremap <silent> <Leader>> :exe "vertical resize " . float2nr(winwidth(0) * 0.85)<CR>
+nnoremap <silent> <Leader>< :exe "vertical resize " . float2nr(winwidth(0) * 1.15)<CR>
+
+" Remove trailing white spaces
+autocmd BufWritePre * %s/\s\+$//e
+
 " Statusline ----------------------------
 set statusline+=%*
+

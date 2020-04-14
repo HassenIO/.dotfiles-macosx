@@ -47,6 +47,11 @@ alias commit="git commit"
 alias push="git push"
 
 ##
+#   VIM
+#
+alias vinstall="vim +'PlugInstall --sync' +qa"
+
+##
 #   Add Google Cloud aliases
 #
 alias gc="gcloud"
@@ -86,6 +91,13 @@ alias ~="cd ~"
 ##
 #   Helpful functions
 ##
+
+# Access a folder and list the content
+function goto() {
+  cd $1
+  pwd
+  colorls --group-directories-first --almost-all --long
+}
 
 # Check applications that are using a specific port
 function port() {
